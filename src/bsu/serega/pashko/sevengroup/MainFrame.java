@@ -167,3 +167,100 @@ public class MainFrame extends JFrame {
         hboxResult.add(textFieldResult);
         hboxResult.add(Box.createHorizontalGlue());
         hboxResult.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+
+
+        // Добавление кнопок MC И M+
+
+        JButton buttonMC = new JButton("MC");
+        buttonMC.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                try {
+                    textFieldMem.setText("0");
+                    textFieldMem2.setText("0");
+                    textFieldMem3.setText("0");
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(MainFrame.this,
+                            "Ошибка в формате записи числа с плавающей точкой", "Ошибочный формат числа",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+
+
+
+        JButton buttonCalc = new JButton("Вычислить");
+        buttonCalc.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                try {Double x = Double.parseDouble(textFieldX.getText());
+                    Double y = Double.parseDouble(textFieldY.getText());
+                    Double z = Double.parseDouble(textFieldZ.getText());
+                    final Double result;
+                    if (formulaId==1)
+                        result = calculate1(x, y, z);
+                    else
+                        result = calculate2(x, y, z);
+                    textFieldResult.setText(result.toString());
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(MainFrame.this,
+                            "Ошибка в формате записи числа с плавающей точкой", "Ошибочный формат числа",
+                            JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        });
+        JButton buttonMPLUS = new JButton("M+");
+        buttonMPLUS.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                double result = Double.parseDouble(textFieldResult.getText());
+                double temp;
+                if(memoryId==1) { temp = Double.parseDouble(textFieldMem.getText()); result += temp;}
+                if(memoryId==2) { temp = Double.parseDouble(textFieldMem2.getText());result += temp;}
+                if(memoryId==3) { temp = Double.parseDouble(textFieldMem3.getText());result += temp;}
+                textFieldResult.setText(String.valueOf(result));
+            }
+        });
+        Box hboxButtonsM = Box.createHorizontalBox();
+        hboxButtonsM.add(Box.createHorizontalGlue());
+        hboxButtonsM.add(buttonMC);
+        hboxButtonsM.add(Box.createHorizontalStrut(30));
+        hboxButtonsM.add(buttonMPLUS);
+        hboxButtonsM.add(Box.createHorizontalGlue());
+        hboxButtonsM.setBorder(
+                BorderFactory.createLineBorder(Color.GREEN));
+        JButton buttonReset = new JButton("Очистить поля");
+        buttonReset.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ev) {
+                textFieldX.setText("0");
+                textFieldY.setText("0");
+                textFieldZ.setText("0");
+                textFieldResult.setText("0");
+            }
+        });
+        Box hboxButtons = Box.createHorizontalBox();
+        hboxButtons.add(Box.createHorizontalGlue());
+        hboxButtons.add(buttonCalc);
+        hboxButtons.add(Box.createHorizontalStrut(30));
+        hboxButtons.add(buttonReset);
+        hboxButtons.add(Box.createHorizontalGlue());
+        hboxButtons.setBorder(
+                BorderFactory.createLineBorder(Color.GREEN));
+// Связать области воедино в компоновке BoxLayout
+        Box contentBox = Box.createVerticalBox();
+        contentBox.add(Box.createVerticalGlue());
+        contentBox.add(hboxFormulaType);
+        contentBox.add(hboxMemoryType);
+        contentBox.add(hboxVariables);
+        contentBox.add(hboxMemory);
+        contentBox.add(hboxResult);
+        contentBox.add(hboxButtons);
+        contentBox.add(hboxButtonsM);
+        contentBox.add(Box.createVerticalGlue());
+        getContentPane().add(contentBox, BorderLayout.CENTER);
+    }
+
+    public static void main(String[] args) {
+        MainFrame frame = new MainFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
+    }
+}
