@@ -20,7 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-
 public class MainFrame extends JFrame {
     private static final int WIDTH = 400;
     private static final int HEIGHT = 320;
@@ -168,6 +167,7 @@ public class MainFrame extends JFrame {
         hboxResult.add(textFieldResult);
         hboxResult.add(Box.createHorizontalGlue());
         hboxResult.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+
 
         // Добавление кнопок MC И M+
 
